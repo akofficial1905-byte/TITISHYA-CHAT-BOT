@@ -1,0 +1,28 @@
+{
+  "Main Course Veg": [
+    { "name": "Paneer Tikka Masala", "half": 130, "full": 240 },
+    { "name": "Paneer Do Pyaza", "half": 120, "full": 220 },
+    { "name": "Mutter Paneer", "half": 120, "full": 240 },
+    { "name": "Shahi Paneer", "half": 120, "full": 240 },
+    { "name": "Kadhai Paneer", "half": 120, "full": 210 }
+  ],
+  "Main Course Non Veg": [
+    { "name": "Chicken Curry", "4pcs": 100, "8pcs": 180, "16pcs": 350 },
+    { "name": "Butter Chicken", "4pcs": 120, "8pcs": 220, "16pcs": 430 },
+    { "name": "Chicken Tikka Masala", "4pcs": 150, "8pcs": 230, "16pcs": 450 }
+  ],
+  "Breads": [
+    { "name": "Tawa Roti", "price": 8 },
+    { "name": "Plain Naan", "price": 25 },
+    { "name": "Butter Naan", "price": 30 }
+  ],
+  "Thali": [
+    { "name": "Veg Thali", "price": 80, "details": "Sabzi + Dal + Rice + 2 Roti" },
+    { "name": "Chicken Thali", "price": 120, "details": "3 Pc Chicken Curry + Dal + Rice + 3 Roti" }
+  ],
+  "Mutton": [
+    { "name": "Mutton Curry (3pc)", "price": 200 },
+    { "name": "Mutton Curry (6pc)", "price": 400 }
+  ]
+}
+
