@@ -96,11 +96,11 @@
     { "name": "Paneer Fried Rice", "variants": { "Half": 100, "Full": 160 } },
     { "name": "Egg Fried Rice", "variants": { "Half": 100, "Full": 160 } },
     { "name": "Chicken Fried Rice", "variants": { "Half": 120, "Full": 200 } },
-    { "name": "Chicken Dum Biryani", "variants": { "Half": 80, "Full": 140 } },
-    { "name": "Veg Rice Combo", "variants": { "Plate": 80 } },
-    { "name": "Special Titishya Biryani", "variants": { "Half": 100, "Full": 180 } }
+    { "name": "Veg Rice Combo", "variants": { "Plate": 80 } }
   ],
-
+"Biryani": [
+  { "name": "Chicken Dum Biryani", "variants": { "Half": 80, "Full": 140 } }
+],
   "Cold Drink & Water": [
     { "name": "Cold Drink", "variants": { "Bottle": 20 } },
     { "name": "Water Bottle", "variants": { "Piece": 20 } }
