@@ -95,7 +95,7 @@
     { "name": "Veg Fried Rice", "variants": { "Half": 80, "Full": 120 } },
     { "name": "Paneer Fried Rice", "variants": { "Half": 100, "Full": 160 } },
     { "name": "Egg Fried Rice", "variants": { "Half": 100, "Full": 160 } },
-    { "name": "Chicken Fried Rice", "variants": { "Half": 120, "Full": 200 } },
+    { "name": "Chicken Fried Rice", "variants": { "Plate":100 } },
     { "name": "Veg Rice Combo", "variants": { "Plate": 80 } }
   ],
 "Biryani": [
@@ -104,5 +104,19 @@
   "Cold Drink & Water": [
     { "name": "Cold Drink", "variants": { "Bottle": 20 } },
     { "name": "Water Bottle", "variants": { "Piece": 20 } }
-  ]
+  ],
+  "Soup": [
+    { "name": "Tomato Soup", "variants": { "Bowl": 70 } },
+    { "name": "Chicken Soup", "variants": { "Bowl": 80 } }
+  ],
+ "Chinese Snacks": [
+    { "name": "Veg Noodles", "variants": { "Plate": 70 } },
+    { "name": "Paneer Noodles", "variants": { "Plate": 100 } },
+    { "name": "Chicken Noodles", "variants": { "Plate": 100 } },
+    { "name": "Veg Manchurian", "variants": { "6 pcs": 100, "12 pcs":100 } },
+    { "name": "French Fry", "variants": { "Plate": 100 } },
+    { "name": "Honey Chilli Potato", "variants": { "Plate": 120 } },
+    { "name": "Paneer Veg Burger", "variants": { "Plate": 60 } },
+    { "name": "Chicken Burger", "variants": { "Plate": 100 } }
+  ]    
 }
