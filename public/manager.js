@@ -1,4 +1,4 @@
-// public/manager.js - manager dashboard with real-time updates
+// public/manager.js - manager dashboard with print-ready receipts
 (async function(){
   const socket = io();
   const datePicker = document.getElementById('datePicker');
@@ -42,24 +42,34 @@
   }
 
   function orderCard(o, isDelivered){
-    return `<div class="bg-white p-3 rounded mb-3 shadow-sm">
-      <div class="flex justify-between items-start">
-        <div>
-          <div class="font-semibold">${escapeHtml(o.customerName)} — Table ${escapeHtml(o.tableNumber || '-')}</div>
-          <div class="text-sm text-gray-500">${new Date(o.createdAt).toLocaleString()}</div>
-        </div>
-        <div class="text-right">
-          <div class="font-bold">₹${o.total}</div>
-          <div class="text-sm text-gray-500">${o.paymentStatus ? 'Paid' : 'Pending'}</div>
-        </div>
+    return `<div class="bg-white p-3 rounded mb-3 shadow-sm order-details" id="order-${o.id}">
+      <div>
+        <h2 style="margin:0;font-size:1.1em;text-align:center;">Titishya Fast Food</h2>
+        <div style="font-weight:bold;">Order#: ${escapeHtml(o.id)}</div>
+        <div>Customer: ${escapeHtml(o.customerName)} — Table ${escapeHtml(o.tableNumber || '-')}</div>
+        <div style="color:#666;font-size:13px;">${new Date(o.createdAt).toLocaleString()}</div>
+        <hr>
+        <div>${o.items.map(it=>`${escapeHtml(it.qty)} × ${escapeHtml(it.name)} — ₹${it.price}`).join('<br>')}</div>
+        <hr>
+        <div style="font-weight:bold;">Total: ₹${o.total}</div>
+        <div style="font-size:13px;color:#666;">${o.paymentStatus ? 'Paid' : 'Pending payment'}</div>
+        ${o.status === 'delivered' && o.deliveredAt ? `<div style="font-size:12px;">Delivered at: ${new Date(o.deliveredAt).toLocaleString()}</div>` : ''}
+        <div style="text-align:center;margin-top:8px;font-size:13px;">Thank you!</div>
       </div>
-      <div class="mt-2 text-sm">${o.items.map(it=>'<div>'+escapeHtml(it.qty)+' × '+escapeHtml(it.name)+' — ₹'+it.price+'</div>').join('')}</div>
-      <div class="mt-3">${!isDelivered ? '<button class="px-3 py-1 bg-yellow-400 rounded mr-2" data-id="'+o.id+'" data-action="preparing">Mark Preparing</button><button class="px-3 py-1 bg-green-600 text-white rounded mr-2" data-id="'+o.id+'" data-action="delivered">Mark Delivered</button><button class="px-3 py-1 bg-red-500 text-white rounded" data-id="'+o.id+'" data-action="delete">Delete</button>' : ''}</div>
+      <div class="mt-3" style="display:flex;gap:8px;margin-top:10px;">
+        <button class="px-3 py-1 bg-blue-500 text-white rounded" onclick="printOrder('${o.id}')">Print</button>
+        ${
+          !isDelivered
+            ? `<button class="px-3 py-1 bg-yellow-400 rounded" data-id="${o.id}" data-action="preparing">Mark Preparing</button>
+               <button class="px-3 py-1 bg-green-600 text-white rounded" data-id="${o.id}" data-action="delivered">Mark Delivered</button>
+               <button class="px-3 py-1 bg-red-500 text-white rounded" data-id="${o.id}" data-action="delete">Delete</button>`
+            : ``
+        }
+      </div>
     </div>`;
   }
 
   socket.on('newOrder', (o) => {
-    // if current date, reload
     if ((o.createdAt||'').slice(0,10) === datePicker.value) {
       fetchOrders(datePicker.value);
     }
@@ -74,5 +84,45 @@
   await fetchOrders(datePicker.value);
 
   function escapeHtml(s){ return (''+s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+  // PRINT FUNCTION
+  window.printOrder = function(orderId) {
+    var orderElem = document.getElementById('order-' + orderId);
+    if (!orderElem) return;
+
+    let clone = orderElem.cloneNode(true);
+    let actionDiv = clone.querySelector('.mt-3');
+    if (actionDiv) actionDiv.style.display = 'none';
+
+    const printContent = `
+      <div style="font-family:monospace;font-size:16px;max-width:280px;margin:auto;">
+        ${clone.innerHTML}
+      </div>
+    `;
+
+    var printWindow = window.open('', '', 'height=600,width=400');
+    printWindow.document.write('<html><head><title>Order Print</title>');
+    printWindow.document.write(`
+      <style>
+        body { margin:0;padding:10px;background:#fff; }
+        h2 { text-align:center;margin:0 0 10px 0; }
+        hr { margin:10px 0;border:none;border-top:1px dashed #333; }
+        .order-details { box-shadow:none;border:none; }
+        @media print {
+          body { margin:0; }
+          .mt-3, button { display: none !important; }
+        }
+      </style>
+    `);
+    printWindow.document.write('</head><body>');
+    printWindow.document.write(printContent);
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.onload = function() {
+      printWindow.focus();
+      printWindow.print();
+      setTimeout(function(){ printWindow.close(); }, 600);
+    };
+  };
 })();
 
